@@ -1,0 +1,65 @@
+#!/bin/bash
+
+# Script to create a new Advent of Code assignment
+# Usage: ./create-assignment <assignment_number>
+
+set -e
+
+if [ $# -eq 0 ]; then
+    echo "Error: Assignment number required"
+    echo "Usage: $0 <assignment_number>"
+    exit 1
+fi
+
+ASSIGNMENT_NUM=$1
+
+# Validate that the assignment number is a positive integer
+if ! [[ "$ASSIGNMENT_NUM" =~ ^[0-9]+$ ]]; then
+    echo "Error: Assignment number must be a positive integer"
+    exit 1
+fi
+
+ASSIGNMENTS_DIR="src/assignments"
+ASSIGNMENT_FILE="${ASSIGNMENTS_DIR}/assignment_${ASSIGNMENT_NUM}.rs"
+INPUT_FILE="${ASSIGNMENTS_DIR}/assignment_${ASSIGNMENT_NUM}.txt"
+
+# Check if assignment already exists
+if [ -f "$ASSIGNMENT_FILE" ]; then
+    echo "Error: Assignment ${ASSIGNMENT_NUM} already exists at ${ASSIGNMENT_FILE}"
+    exit 1
+fi
+
+# Create the assignment file
+cat > "$ASSIGNMENT_FILE" << EOF
+use super::prelude::*;
+
+pub fn get_assignment() -> Assignment {
+    Assignment::new(AssignmentOptions {
+        day: ${ASSIGNMENT_NUM},
+        description: "Day ${ASSIGNMENT_NUM}",
+        run: _run,
+        example_input_day_1: None,
+        answer_example_day_1: None,
+        example_input_day_2: None,
+        answer_example_day_2: None,
+        answer_day_1: None,
+        answer_day_2: None,
+    })
+}
+
+fn _run(context: AssignmentRuntimeContext) -> Result<Option<Answer>> {
+    // TODO: Implement solution for day ${ASSIGNMENT_NUM}
+
+    Ok(None)
+}
+EOF
+
+# Create empty input file
+touch "$INPUT_FILE"
+
+echo "Created assignment ${ASSIGNMENT_NUM}:"
+echo "  - ${ASSIGNMENT_FILE}"
+echo "  - ${INPUT_FILE}"
+echo ""
+echo "The assignment will be automatically registered on the next build."
+

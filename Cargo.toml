@@ -1,0 +1,17 @@
+[package]
+name = "aoc2025"
+version = "0.1.0"
+# Rust language edition (not the Advent year).
+edition = "2024"
+
+[dependencies]
+anyhow = "1.0.100"
+itertools = "0.14.0"
+owo-colors = "4"
+paste = "1.0"
+rayon = "1.11"
+regex = "1.12"
+stopwatch = "0.0.7"
+
+[dev-dependencies]
+test-case = "3.3"
