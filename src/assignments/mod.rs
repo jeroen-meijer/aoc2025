@@ -107,6 +107,12 @@ impl From<u32> for Answer {
     }
 }
 
+impl From<u16> for Answer {
+    fn from(value: u16) -> Self {
+        Answer::Integer(value.into())
+    }
+}
+
 impl From<i32> for Answer {
     fn from(value: i32) -> Self {
         if value < 0 {
