@@ -1,1 +1,21 @@
 /target
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux / editors
+*~
+*.swp
+*.swo
+
+# Environment
+.env
+.env.local
+.env.*.local
