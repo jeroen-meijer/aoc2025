@@ -2,7 +2,7 @@ use std::ops::RangeInclusive;
 
 use anyhow::anyhow;
 use itertools::Itertools;
-use puffin::profile_scope;
+use rayon::iter::{IntoParallelIterator, ParallelIterator};
 
 use super::prelude::*;
 
@@ -35,14 +35,12 @@ fn is_symmetric_num(num: &u64, check_all_chunks: bool) -> bool {
     let str_len = num_str.len();
 
     let has_equal_chunks = |chunk_size: usize| -> bool {
-        let chunks = num_str.chars().chunks(chunk_size);
-
-        let strings = chunks
+        let strings = num_str
+            .chars()
+            .chunks(chunk_size)
             .into_iter()
             .map(Iterator::collect::<String>)
             .collect_vec();
-
-        profile_scope!("check_equality");
 
         let all_equal = &strings.iter().all_equal();
 
@@ -82,10 +80,11 @@ fn _run(context: AssignmentRuntimeContext) -> Result<Option<Answer>> {
 
     let check_all_chunks = context.part_number == 2;
     let found_symmetric_nums = ranges
-        .into_iter()
-        .flat_map(|range| range.filter(|num| is_symmetric_num(num, check_all_chunks)));
+        .into_par_iter()
+        .flat_map(|range| range.collect_vec())
+        .filter(|num| is_symmetric_num(num, check_all_chunks));
 
     let result = found_symmetric_nums.sum::<u64>();
 
-    Ok(Some(result.into()))
+    answer!(result)
 }

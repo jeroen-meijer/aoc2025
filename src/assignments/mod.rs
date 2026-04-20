@@ -11,6 +11,26 @@ use stopwatch::Stopwatch;
 
 mod prelude;
 
+/// Macro to return an answer.
+///
+/// # Examples
+///
+/// ```
+/// use assignments::answer;
+///
+/// answer!(42);
+/// ```
+///
+/// When no answer is provided, the function returns `None`.
+macro_rules! answer {
+    () => {
+        return Ok(None)
+    };
+    ($value:expr) => {
+        return Ok(Some(($value).into()))
+    };
+}
+
 // Macro to generate get_assignment calls (must be defined before the include)
 macro_rules! include_assignments {
     ($($day:literal),* $(,)?) => {
@@ -277,7 +297,7 @@ type InternalAssignmentCallback =
 ///
 /// # Examples
 ///
-/// ```no_run
+/// ```
 /// use assignments::{Assignment, AssignmentOptions};
 ///
 /// Assignment::new(AssignmentOptions {
@@ -321,7 +341,7 @@ pub struct AssignmentOptions {
 ///
 /// # Examples
 ///
-/// ```no_run
+/// ```
 /// use assignments::{AssignmentRuntimeContext, Answer};
 ///
 /// fn solve(context: AssignmentRuntimeContext) -> Result<Option<Answer>, String> {

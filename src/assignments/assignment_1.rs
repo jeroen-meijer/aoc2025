@@ -167,8 +167,8 @@ fn _run(context: AssignmentRuntimeContext) -> Result<Option<Answer>> {
     }
 
     if context.part_number == 1 {
-        Ok(Some(zero_hits.into()))
+        answer!(zero_hits)
     } else {
-        Ok(Some((zero_hits + zero_passes).into()))
+        answer!(zero_hits + zero_passes)
     }
 }
