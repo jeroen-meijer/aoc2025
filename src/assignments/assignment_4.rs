@@ -1,4 +1,4 @@
-use std::{collections::HashSet, fmt::Debug, ops::Range, time::Instant};
+use std::{collections::HashSet, fmt::Debug, ops::Range};
 
 use anyhow::bail;
 use rayon::iter::{IndexedParallelIterator, IntoParallelIterator, ParallelIterator};
