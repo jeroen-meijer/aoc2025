@@ -69,9 +69,9 @@ fn find_largest_num(digits: usize, bank: &String) -> Result<u64> {
                 Ordering::Equal => Ordering::Greater,
                 ordering => ordering,
             })
-            .ok_or(anyhow!(format!(
-                "Search range is empty. Bank: {remaining_bank:?}. Range: {search_range:?}"
-            )))?;
+            .with_context(|| {
+                format!("Search range is empty. Bank: {remaining_bank:?}. Range: {search_range:?}")
+            })?;
 
         let remaining_bank = remaining_bank[(largest_index + 1)..].to_vec();
 
@@ -92,7 +92,7 @@ fn find_largest_num(digits: usize, bank: &String) -> Result<u64> {
         .map(|s| {
             s.to_digit(10)
                 .map(|x| x as u8)
-                .ok_or(anyhow!(format!("Could not convert string to digit: {s}")))
+                .with_context(|| format!("Could not convert string to digit: {s}"))
         })
         .collect::<Result<Vec<_>>>()?;
     let largest_sequence = find_largest_num_internal(digits, parsed_bank)?;

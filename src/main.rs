@@ -99,7 +99,7 @@ fn _run_single_assignment(assignment: &Assignment) {
         if let Some(e) = &output.expected
             && !did_succeed
         {
-            print!("Expected {},", e.to_string().bold());
+            print!(" Expected {},", e.to_string().bold());
         }
 
         match &output.actual {
