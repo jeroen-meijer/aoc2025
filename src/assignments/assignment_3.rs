@@ -1,6 +1,6 @@
 use std::cmp::Ordering;
 
-use anyhow::{Context, anyhow};
+use anyhow::Context;
 use itertools::Itertools;
 use rayon::iter::{IntoParallelIterator, ParallelIterator};
 

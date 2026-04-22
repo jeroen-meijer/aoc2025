@@ -263,13 +263,3 @@ fn _run(context: AssignmentRuntimeContext) -> Result<Option<Answer>> {
     let removed_indices_count = size - indices.len();
     answer!(removed_indices_count)
 }
-
-fn time<F, T>(description: &str, f: F) -> T
-where
-    F: FnOnce() -> T,
-{
-    let start = Instant::now();
-    let res = f();
-    println!("'{description}': {:?}", start.elapsed());
-    res
-}
